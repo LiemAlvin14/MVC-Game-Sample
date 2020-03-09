@@ -75,7 +75,32 @@ public class MainController extends JFrame implements ActionListener,
 
         newGame(1);
     }
-
+    
+                
+    //refactor
+    private int levelCount = 0;
+    private void addNewLevel(String actionCommand, JMenu fileMenu ){
+        levelCount+=1;
+        String input,level = ((Integer)levelCount).toString();
+        if(levelCount==1){
+            input = "new game";
+        }
+        else{
+            input = "Level "+level;
+        }
+        JMenuItem newGame = new JMenuItem(input);
+        newGame.setToolTipText("Start level "+level);
+        newGame.setActionCommand(actionCommand);
+        newGame.addActionListener(this);
+        fileMenu.add(newGame);
+    }
+    private void addNewMenu(String desc, String tooltip, String actionCommand, JMenu menu){
+        JMenuItem item = new JMenuItem(desc);
+        item.setToolTipText(tooltip);
+        item.setActionCommand(actionCommand);
+        item.addActionListener(this);
+        menu.add(item);
+    }
     /*
      * Setup the menu
      */
@@ -88,58 +113,17 @@ public class MainController extends JFrame implements ActionListener,
         menuBar.add(helpMenu);
 
         // File -> New game menu item
-        JMenuItem newGame1 = new JMenuItem("new game");
-        newGame1.setToolTipText("Start level 1");
-        newGame1.setActionCommand(ACTION_NEW_GAME1);
-
-        // File -> Level2 menu item
-        JMenuItem newGame2 = new JMenuItem("Level 2");
-        newGame2.setToolTipText("Start level 2");
-        newGame2.setActionCommand(ACTION_NEW_GAME2);
-
-        // File -> Level3 menu item
-        JMenuItem newGame3 = new JMenuItem("Level 3");
-        newGame3.setToolTipText("Start level 3");
-        newGame3.setActionCommand(ACTION_NEW_GAME3);
-
-        // File -> Level4 menu item
-        JMenuItem newGame4 = new JMenuItem("Level 4");
-        newGame4.setToolTipText("Start level 4");
-        newGame4.setActionCommand(ACTION_NEW_GAME4);
-
-        // File -> Level5 menu item
-        JMenuItem newGame5 = new JMenuItem("Level 5");
-        newGame5.setToolTipText("Start level 5");
-        newGame5.setActionCommand(ACTION_NEW_GAME5);
-
+        addNewLevel(ACTION_NEW_GAME1, fileMenu );
+        addNewLevel(ACTION_NEW_GAME2, fileMenu );
+        addNewLevel(ACTION_NEW_GAME3, fileMenu );
+        addNewLevel(ACTION_NEW_GAME4, fileMenu );
+        addNewLevel(ACTION_NEW_GAME5, fileMenu );
+            
         // File -> Exit game menu item
-        JMenuItem exitGame = new JMenuItem("Exit (Esc)");
-        exitGame.setToolTipText("Exit the game");
-        exitGame.setActionCommand(ACTION_EXIT_GAME);
-
+        addNewMenu("Exit (Esc)","Exit the game", ACTION_EXIT_GAME, fileMenu);
+                
         // Help -> About menu item
-        JMenuItem about = new JMenuItem("About");
-        about.setToolTipText("About the developers");
-        about.setActionCommand(ACTION_ABOUT);
-
-        // fileMenu.addActionListener(this);
-        // helpMenu.addActionListener(this);
-        newGame1.addActionListener(this);
-        newGame2.addActionListener(this);
-        newGame3.addActionListener(this);
-        newGame4.addActionListener(this);
-        newGame5.addActionListener(this);
-        exitGame.addActionListener(this);
-        about.addActionListener(this);
-
-        // Add the sub menu items to the file and help menu
-        fileMenu.add(newGame1);
-        fileMenu.add(newGame2);
-        fileMenu.add(newGame3);
-        fileMenu.add(newGame4);
-        fileMenu.add(newGame5);
-        fileMenu.add(exitGame);
-        helpMenu.add(about);
+        addNewMenu("About", "About the developers", ACTION_ABOUT , helpMenu);
 
     }
 
